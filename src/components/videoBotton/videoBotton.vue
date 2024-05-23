@@ -1,32 +1,56 @@
 <template>
   <div class="container_bottom">
-    <div class="bottom_tab" :class="tabIndex === 0?'tab_active':''" @click="changeTab(0)">
+    <div
+      class="bottom_tab"
+      :class="tabIndex === 0?'tab_active':''"
+      @click="changeTab(0)"
+    >
       <span class="bottom_tab_span ">首页</span>
     </div>
-    <div class="bottom_tab" :class="tabIndex === 1?'tab_active':''" @click="changeTab(1)">
+    <div
+      class="bottom_tab"
+      :class="tabIndex === 1?'tab_active':''"
+      @click="changeTab(1)"
+    >
       <span class="bottom_tab_span ">朋友</span>
     </div>
-    <div class="bottom_tab" :class="tabIndex === 2?'tab_active':''" @click="changeTab(2)">
-      <img src="http://oss.jishiyoo.com/images/file-1575427746903.png" alt="" class="bottom_tab_icon">
+    <div
+      class="bottom_tab"
+      :class="tabIndex === 2?'tab_active':''"
+      @click="changeTab(2)"
+    >
+      <img
+        src="http://oss.jishiyoo.com/images/file-1575427746903.png"
+        alt=""
+        class="bottom_tab_icon"
+      >
     </div>
-    <div class="bottom_tab" :class="tabIndex === 3?'tab_active':''" @click="changeTab(3)">
+    <div
+      class="bottom_tab"
+      :class="tabIndex === 3?'tab_active':''"
+      @click="changeTab(3)"
+    >
       <span class="bottom_tab_span">消息</span>
     </div>
-    <div class="bottom_tab" :class="tabIndex === 4?'tab_active':''" @click="changeTab(4)">
+    <div
+      class="bottom_tab"
+      :class="tabIndex === 4?'tab_active':''"
+      @click="changeTab(4)"
+    >
       <span class="bottom_tab_span">我的</span>
     </div>
   </div>
 </template>
 
 <script setup>
-  import {ref} from 'vue'
-  defineProps({
-    videoProcess: Number,
-  })
-  const tabIndex = ref(0);
-  function changeTab(index) {
-    tabIndex.value = index;
-  }
+import { ref } from 'vue'
+defineProps({
+  videoProcess: Number
+})
+const tabIndex = ref(0)
+function changeTab(index) {
+  tabIndex.value = index
+}
 </script>
 
 <style scoped>

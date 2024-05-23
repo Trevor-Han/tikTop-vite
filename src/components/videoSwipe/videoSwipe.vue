@@ -1,14 +1,18 @@
 <template>
   <van-swipe
-      class="van_swipe"
-      :show-indicators="false"
-      vertical
-      :loop="false"
-      @change="change"
-      @touchstart="touchstart"
-      @touchend="touchend"
+    class="van_swipe"
+    :show-indicators="false"
+    vertical
+    :loop="false"
+    @change="change"
+    @touchstart="touchstart"
+    @touchend="touchend"
   >
-    <van-swipe-item class="product_swiper" v-for="(item,index) in state.videoList" :key="item.author_id">
+    <van-swipe-item
+      v-for="(item,index) in state.videoList"
+      :key="item.author_id"
+      class="product_swiper"
+    >
       <div class="video_container">
         <!--视频流
             webkit-playsinline ios 小窗播放，使视频不脱离文本流，安卓则无效
@@ -21,103 +25,154 @@
             :src="item.url"
             -->
         <video
-            ref="player" loop
-            class="video_box"
-            playsinline preload="auto"
-            :src="item.src"
-            @ended="onPlayerEnded"
-            @click="pauseVideo"
-            webkit-playsinline="true"
-            x5-video-player-type="h5-page"
-            x5-video-player-fullscreen="true">
-        </video>
+          ref="player"
+          loop
+          class="video_box"
+          playsinline
+          preload="auto"
+          :src="item.src"
+          webkit-playsinline="true"
+          x5-video-player-type="h5-page"
+          x5-video-player-fullscreen="true"
+          @ended="onPlayerEnded"
+          @click="pauseVideo"
+        />
         <!-- 封面 -->
         <!--<img  class="background-play" :src="item.cover"/>-->
         <!--暂停播放-->
-        <img src="../../assets/pausePlay.png" class="icon_play" @click="playVideo" v-if="state.playOrPause" alt="playOrPause">
+        <img
+          v-if="state.playOrPause"
+          src="../../assets/pausePlay.png"
+          class="icon_play"
+          alt="playOrPause"
+          @click="playVideo"
+        >
       </div>
       <!-- 右侧头像、点赞、评论、分享功能 -->
       <div class="tools_right">
         <!-- 关注该作者 -->
         <div class="tools_r_li">
-          <img :src="item.tag_image" class="tag_image" alt="">
-          <van-icon name="plus" class="tag_add" @click="checkSubscribe(item,index)" v-show="!item.tagFollow"/>
-          <van-icon name="success" class="tag_dui" @click="checkSubscribe(item,index)" v-show="item.tagFollow"
-                    :class="item.tagFollow?'tag_dui_active':''"/>
+          <img
+            :src="item.tag_image"
+            class="tag_image"
+            alt=""
+          >
+          <van-icon
+            v-show="!item.tagFollow"
+            name="plus"
+            class="tag_add"
+            @click="checkSubscribe(item,index)"
+          />
+          <van-icon
+            v-show="item.tagFollow"
+            name="success"
+            class="tag_dui"
+            :class="item.tagFollow?'tag_dui_active':''"
+            @click="checkSubscribe(item,index)"
+          />
         </div>
         <!--  改变收藏状态 -->
-        <div class="tools_r_li" @click="changeFabulous(item,index)">
-          <van-icon name="like" class="icon_right"
-                    :class="item.fabulous?'fabulous_active':''"></van-icon>
+        <div
+          class="tools_r_li"
+          @click="changeFabulous(item,index)"
+        >
+          <van-icon
+            name="like"
+            class="icon_right"
+            :class="item.fabulous?'fabulous_active':''"
+          />
           <div class="tools_r_num">52.1w</div>
         </div>
         <!-- 弹出评论窗口 -->
-        <div class="tools_r_li" @click="changeComment">
-          <van-icon name="chat" class="icon_right icon_right_change"></van-icon>
+        <div
+          class="tools_r_li"
+          @click="changeComment"
+        >
+          <van-icon
+            name="chat"
+            class="icon_right icon_right_change"
+          />
           <div class="tools_r_num">12.5w</div>
         </div>
         <!-- 展示分享弹窗 -->
-        <div class="tools_r_li" @click="changeShare">
-          <van-icon name="share" class="icon_right"></van-icon>
+        <div
+          class="tools_r_li"
+          @click="changeShare"
+        >
+          <van-icon
+            name="share"
+            class="icon_right"
+          />
           <div class="tools_r_num">22.2w</div>
         </div>
-        <div class="tools_r_li music-around" :class="state.flag === true ? 'around':'stay'">
-          <img src="/src/assets/music.jpg" alt="" class="music_img">
+        <div
+          class="tools_r_li music-around"
+          :class="state.flag === true ? 'around':'stay'"
+        >
+          <img
+            src="/src/assets/music.jpg"
+            alt=""
+            class="music_img"
+          >
         </div>
       </div>
       <!-- 底部作品描述 -->
       <div class="production_box">
         <div class="production_name">
-          @{{item.author}}
+          @{{ item.author }}
         </div>
         <div class="production_des">
-          {{item.title}}
+          {{ item.title }}
         </div>
         <div class="production_music">
-          <p :class="state.flag === true ? 'production_music_around':''">{{item.music}}</p>
+          <p :class="state.flag === true ? 'production_music_around':''">{{ item.music }}</p>
         </div>
       </div>
     </van-swipe-item>
   </van-swipe>
   <div class="swipe-bottom">
-    <div class="border-progress" :style="'width:'+ state.videoProcess+'%'"></div>
+    <div
+      class="border-progress"
+      :style="'width:'+ state.videoProcess+'%'"
+    />
   </div>
 
   <van-popup
-      v-model:show="state.commentPop"
-      class="comment_container"
-      closeable
-      :overlay="true"
-      position="bottom">
-    <videoComment :commentPop="state.commentPop"/>
+    v-model:show="state.commentPop"
+    class="comment_container"
+    closeable
+    :overlay="true"
+    position="bottom"
+  >
+    <videoComment :comment-pop="state.commentPop" />
   </van-popup>
   <van-popup
-      v-model:show="state.sharePop"
-      class="comment_container"
-      closeable
-      :overlay="true"
-      position="bottom">
-    <videoShare/>
+    v-model:show="state.sharePop"
+    class="comment_container"
+    closeable
+    :overlay="true"
+    position="bottom"
+  >
+    <videoShare />
   </van-popup>
 </template>
 
 <script setup>
-  import {onMounted} from 'vue'
-  import {videoList} from '../../api/api'
-  import {videoSwipe} from "./videoSwipe";
-  import VideoComment from '/src/components/videoComment/videoComment.vue'
-  import VideoShare from '/src/components/share/share.vue'
+import { onMounted } from 'vue'
+import { videoList } from '../../api/api'
+import { videoSwipe } from './videoSwipe'
+import VideoComment from '/src/components/videoComment/videoComment.vue'
+import VideoShare from '/src/components/share/share.vue'
 
-  const {
-    state,change,playVideo,touchstart,touchend,onPlayerEnded,
-    changeFabulous,changeShare,changeComment,checkSubscribe,pauseVideo
-  } = videoSwipe();
-  onMounted(() =>{
-    videoList().then(item =>{
-      state.videoList = item.data.video;
-    });
-  });
-
+const {
+  state, change, playVideo, touchstart, touchend, onPlayerEnded,
+  changeFabulous, changeShare, changeComment, checkSubscribe, pauseVideo
+} = videoSwipe()
+onMounted(() => {
+  videoList().then(item => {
+    state.videoList = item.data.video
+  })
+})
 
 </script>
 

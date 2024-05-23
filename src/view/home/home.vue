@@ -1,15 +1,15 @@
 <template>
   <div class="container_box">
-    <NavTop></NavTop>
-    <VideoSwipe></VideoSwipe>
-    <VideoTab></VideoTab>
+    <NavTop />
+    <VideoSwipe />
+    <VideoTab />
   </div>
 </template>
 
 <script setup>
-  import NavTop from '/src/components/navTop/novTop.vue'
-  import VideoSwipe from '/src/components/videoSwipe/videoSwipe.vue'
-  import VideoTab from '/src/components/videoBotton/videoBotton.vue'
+import NavTop from '/src/components/navTop/novTop.vue'
+import VideoSwipe from '/src/components/videoSwipe/videoSwipe.vue'
+import VideoTab from '/src/components/videoBotton/videoBotton.vue'
 
 </script>
 

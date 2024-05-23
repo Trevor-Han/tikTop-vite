@@ -6,10 +6,10 @@ export const videoList = () => {
     url: '/videoList/videoList.json',
     method: 'get'
   })
-};
+}
 
 // 获取评论
-export const commentList = () =>{
+export const commentList = () => {
   return request({
     url: '/comment/commentList.json',
     method: 'get'

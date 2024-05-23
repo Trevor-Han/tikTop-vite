@@ -4,31 +4,46 @@
     <div class="share_tips">分享到</div>
     <ul class="share_ul">
       <li class="share_li pengyouquan_li">
-        <van-icon name="music" color="#ff4d4d" class="pengyouquan"></van-icon>
+        <van-icon
+          name="music"
+          color="#ff4d4d"
+          class="pengyouquan"
+        />
       </li>
       <li class="share_li">
-        <van-icon name="wechat" color="#2ba245" class="weixin"></van-icon>
+        <van-icon
+          name="wechat"
+          color="#2ba245"
+          class="weixin"
+        />
       </li>
-      <li class="share_li" @click="copyUrl">
-        <van-icon name="share" color="#999" class="lianjie"></van-icon>
+      <li
+        class="share_li"
+        @click="copyUrl"
+      >
+        <van-icon
+          name="share"
+          color="#999"
+          class="lianjie"
+        />
       </li>
     </ul>
   </div>
 </template>
 
 <script setup>
-  import { Toast } from 'vant'
-  function copyUrl(){
-    let httpUrl = window.location.href;
-    let oInput = document.createElement('input');
-    oInput.value = httpUrl;
-    document.body.appendChild(oInput);
-    oInput.select(); // 选择对象
-    document.execCommand("Copy"); // 执行浏览器复制命令
-    oInput.className = 'oInput';
-    oInput.style.display = 'none';
-    Toast("链接复制成功")
-  }
+import { Toast } from 'vant'
+function copyUrl() {
+  const httpUrl = window.location.href
+  const oInput = document.createElement('input')
+  oInput.value = httpUrl
+  document.body.appendChild(oInput)
+  oInput.select() // 选择对象
+  document.execCommand('Copy') // 执行浏览器复制命令
+  oInput.className = 'oInput'
+  oInput.style.display = 'none'
+  Toast('链接复制成功')
+}
 </script>
 
 <style scoped>

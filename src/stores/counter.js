@@ -1,35 +1,35 @@
-import { ref, computed } from 'vue';
-import { defineStore } from "pinia";
+import { ref, computed } from 'vue'
+import { defineStore } from 'pinia'
 
 // pinia方式
-export const useCounterStore = defineStore('counter',{
+export const useCounterStore = defineStore('counter', {
 
-    state: ()=>({
-        count: 0
-    }),
-    getters: {
-        doubleCount:(state)=> state.count * 2
+  state: () => ({
+    count: 0
+  }),
+  getters: {
+    doubleCount: (state) => state.count * 2
+  },
+  actions: {
+    increment() {
+      this.count++
     },
-    actions:{
-        increment(){
-            this.count ++
-        },
-        subtract(){
-            this.count --
-        }
+    subtract() {
+      this.count--
     }
+  }
 })
 
 // composition方式
-export const useCounterStore_1 = defineStore('counter',()=>{
-    const count = ref(1);
-    const doubleCount = computed(()=> count.value * 2);
+export const useCounterStore_1 = defineStore('counter', () => {
+  const count = ref(1)
+  const doubleCount = computed(() => count.value * 2)
 
-    function increment(){
-        count.value ++;
-    }
-    function subtract(){
-       count.value --;
-    }
-    return { count, doubleCount, increment,subtract}
+  function increment() {
+    count.value++
+  }
+  function subtract() {
+    count.value--
+  }
+  return { count, doubleCount, increment, subtract }
 })
