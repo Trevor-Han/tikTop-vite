@@ -1,0 +1,44 @@
+@import "./variable.scss";
+
+@mixin bg_color(){
+  background: $background-color-light;
+  [data-theme=dark] & {
+    background: $background-color-dark;
+  }
+}
+
+@mixin bg_theme(){
+  background: $background-theme-light;
+  [data-theme=dark] & {
+    background: $background-theme-dark;
+  }
+}
+
+@mixin bg_second(){
+  background: $background-color-second-light;
+  [data-theme=dark] & {
+    background: $background-color-second-dark;
+  }
+}
+
+
+@mixin text_color(){
+  color: $text-color-light;
+  [data-theme=dark] & {
+    color: $text-color-dark;
+  }
+}
+
+@mixin text_color_second(){
+  color: $text-color-second-light;
+  [data-theme=dark] & {
+    color: $text-color-second-dark;
+  }
+}
+
+@mixin text_icon(){
+  color: $text-icon-light;
+  [data-theme=dark] & {
+    color: $text-icon-dark;
+  }
+}

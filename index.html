@@ -8,10 +8,13 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover"
     />
     <!-- 开启顶部安全区适配 -->
-    <van-nav-bar safe-area-inset-top />
+    <van-nav-bar safe-area-inset-top></van-nav-bar>
     <!-- 开启底部安全区适配 -->
-    <van-number-keyboard safe-area-inset-bottom />
+    <van-number-keyboard safe-area-inset-bottom></van-number-keyboard>
     <title>Vite App</title>
+      <script>
+          document.documentElement.setAttribute('data-theme', 'light');
+      </script>
   </head>
   <body>
     <div id="app"></div>

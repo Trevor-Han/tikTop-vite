@@ -44,12 +44,21 @@
 
 <script setup>
 import { ref } from 'vue'
-defineProps({
-  videoProcess: Number
-})
+import { useRouter } from 'vue-router'
 const tabIndex = ref(0)
+const router = useRouter()
+
+const routerMap = {
+  0: { name: 'home' },
+  4: { name: 'my' }
+}
+
 function changeTab(index) {
   tabIndex.value = index
+
+  router.push({
+    name: routerMap[index]['name']
+  })
 }
 </script>
 

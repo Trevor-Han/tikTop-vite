@@ -5,7 +5,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   { path: '/', redirect: { name: 'home' }},
-  { path: '/home', name: 'home', component: () => import('/src/view/home/home.vue') }
+  { path: '/home', name: 'home', component: () => import('/src/view/home/home.vue') },
+  { path: '/friend', name: 'friend', component: () => import('/src/view/friend/index.vue') },
+  { path: '/news', name: 'news', component: () => import('/src/view/news/index.vue') },
+  { path: '/my', name: 'my', component: () => import('/src/view/my/index.vue') }
 ]
 
 const router = createRouter({

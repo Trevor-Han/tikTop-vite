@@ -14,6 +14,12 @@ module.exports = {
   // add your custom rules here
   //it is base on https://github.com/vuejs/eslint-config-vue
   rules: {
+    "vue/max-attributes-per-line": [2, {
+      "singleline": 6,
+      "multiline": {
+        "max": 1,
+      }
+    }],
     "vue/no-multiple-template-root": "off",
     "vue/multi-word-component-names": "off",
     "vue/singleline-html-element-content-newline": "off",
