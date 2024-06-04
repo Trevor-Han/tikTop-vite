@@ -19,12 +19,5 @@ import VideoSwipe from '/src/components/videoSwipe/videoSwipe.vue'
     height: 100vh;
     background: #000;
   }
-  .back_i{
-    position: fixed;
-    top: 20px;
-    left: 10px;
-    width: 20px;
-    z-index: 10;
-  }
 
 </style>

@@ -20,6 +20,7 @@ module.exports = {
         "max": 1,
       }
     }],
+    "vue/no-lone-template":"off",
     "vue/no-multiple-template-root": "off",
     "vue/multi-word-component-names": "off",
     "vue/singleline-html-element-content-newline": "off",
