@@ -61,153 +61,92 @@
         <van-icon name="coupon-o" />
         <span class="text-value">抖音课堂</span>
       </div>
+    </div>
 
+    <div class="edit-data">
+      <div class="edit-item">
+        <span class="edit-label">编辑资料</span>
+        <span class="edit-value">80%</span>
+      </div>
+      <div class="edit-item">
+        <span class="edit-label">添加朋友</span>
+      </div>
     </div>
 
     <!-- 功能按钮 -->
     <div class="functional-buttons">
-      <van-button class="button" plain type="text">作品</van-button>
-      <van-button class="button" plain type="text">私信</van-button>
-      <van-button class="button" plain type="text">推荐</van-button>
-      <!-- 其他按钮... -->
-    </div>
-    <!-- 挑战信息（如果需要） -->
-    <div class="challenge-info">
-      <van-tag color="red" class="challenge-tag">傍晚的天空</van-tag>
-      <van-tag class="challenge-tag">加入挑战</van-tag>
-      <span class="challenge-count">5.3万人已加入挑战</span>
+      <van-tabs v-model="active" sticky animated :color="vanColor" @change="changeVanTab">
+        <van-tab v-for="item in tabs" :key="item.value" :title="item.label" :name="item.value">
+          <template #title> {{ item.label }}
+            <van-icon v-if="active === item.value" :name="item.icon" size="12" color="#999" />
+          </template>
+          <Loading />
+          <div class="tabs-content">
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+            <div class="tabs-con-item">135</div>
+          </div>
+        </van-tab>
+      </van-tabs>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useCounterStore_1 } from '@/stores/counter'
+import { storeToRefs } from 'pinia'
+import Loading from '@/components/Loading'
+
+const counter = useCounterStore_1()
+const { theme } = storeToRefs(counter)
+
 const nickname = ref('TTCV')
 const followers = ref(149)
 const followings = ref(6)
 const posts = ref(27)
+const active = ref('works')
+const vanColor = ref('#333')
+const tabs = ref([
+  { label: '作品', value: 'works', icon: 'arrow-down' },
+  { label: '私密', value: 'privacy', icon: 'lock' },
+  { label: '推荐', value: 'recommend', icon: '' },
+  { label: '收藏', value: 'collect', icon: 'star' },
+  { label: '喜欢', value: 'like', icon: 'like' }
+])
+vanColor.value = theme.value === 'light' ? '#333' : '#ffe903'
+
+watch(theme, val => {
+  vanColor.value = val === 'light' ? '#333' : '#ffe903'
+})
+
+const changeVanTab = (val) => {
+  active.value = val
+}
 
 </script>
 
 <style scoped lang="scss">
-@import "../../assets/css/variable";
-@import "../../assets/css/mixin";
-.profile-page {
-  width: 100%;
-  @include bg_color();
-  font-size: 14px;
-}
-
-.profile-header {
-  @include bg_theme();
-  padding: 16px;
-  box-sizing: border-box;
-  position: relative;
-  height: 260px;
-}
-
-.profile-avatar{
-  position: absolute;
-  bottom: 5%;
-  display: flex;
-  align-items: center;
-  color: #ffffff;
-}
-
-.avatar {
-  width: 100px;
-  height: 100px;
-  margin-right: 16px;
-}
-
-.nickname {
-  font-size: 18px;
-  font-weight: bold;
-}
-.account{
-  font-size: 12px;
-  color: #ddd;
-}
-
-.stats {
-  display: flex;
-  padding: 16px;
-}
-.stat-bold{
-  font-weight: bold;
-  margin-right: 3px;
-  font-size: 14px;
-  @include text_color();
-}
-.stat-label{
-  font-size: 12px;
-  @include text_color_second();
-}
-
-.stat {
-  margin-right: 16px;
-}
-
-.profile-info {
-  padding: 0 16px;
-  .profile-info_header{
-    font-size: 12px;
-    @include text_color();
-  }
-}
-
-.intro {
-  .intro-item{
-    font-size: 12px;
-    margin-right: 8px;
-    padding: 2px 3px;
-    @include text_color();
-    @include bg_second();
-  }
-}
-
-.profile-menu{
-  display: flex;
-  justify-content: space-between;
-  padding: 16px;
-  .menu-item{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    .van-icon{
-      @include text_color();
-      font-size: 22px;
-    }
-    .text-value{
-      @include text_icon();
-      margin-top: 5px;
-      font-size: 12px;
-    }
-  }
-}
-
-.functional-buttons {
-  display: flex;
-  margin-top: 8px;
-}
-
-.button {
-  margin-right: 8px;
-}
-
-.challenge-info {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 16px;
-}
-
-.challenge-tag {
-  margin-right: 8px;
-}
-
-.challenge-count {
-  font-size: 14px;
-  color: #666;
-}
+@import "./style/style";
 </style>

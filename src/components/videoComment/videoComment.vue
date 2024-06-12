@@ -120,11 +120,14 @@
 
 <script setup>
 import { onMounted, reactive, ref, watch } from 'vue'
-import { commentList } from '../../api/api'
+import { commentList } from '@/api/api'
 import { Toast } from 'vant'
 
 const props = defineProps({
-  commentPop: false
+  commentPop: {
+    type: Boolean,
+    default: false
+  }
 })
 
 const content = ref(null)

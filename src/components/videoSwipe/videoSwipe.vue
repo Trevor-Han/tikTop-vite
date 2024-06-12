@@ -159,7 +159,7 @@
 
 <script setup>
 import { onMounted } from 'vue'
-import { videoList } from '../../api/api'
+import { videoList } from '@/api/api'
 import { videoSwipe } from './videoSwipe'
 import VideoComment from '/src/components/videoComment/videoComment.vue'
 import VideoShare from '/src/components/share/share.vue'

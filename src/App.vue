@@ -1,6 +1,10 @@
 <template>
   <van-config-provider :theme-vars-light="themeVarsLight" :theme-vars-dark="themeVarsDark" :theme="theme">
-    <van-switch v-model="checked" @change="themeChange" />
+    <van-cell center :title="theme === 'light'?'浅色':'深色'">
+      <template #right-icon>
+        <van-switch v-model="checked" size="24" active-color="#333" @change="themeChange" />
+      </template>
+    </van-cell>
 
     <router-view v-slot="{ Component }">
       <transition name="fade">
@@ -27,10 +31,14 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
+import { useCounterStore_1 } from '@/stores/counter'
+import { storeToRefs } from 'pinia'
+
+const counter = useCounterStore_1()
+const { theme } = storeToRefs(counter)
 
 const active = ref(0)
 const checked = ref(false)
-const theme = ref('light')
 const themeVarsLight = reactive({
   tabbarBackground: '#333',
   tabbarItemActiveBackground: 'transparent',
@@ -47,6 +55,7 @@ const themeVarsDark = {
 
 // const activeColor = ref('#fff')
 // const inactiveColor = ref('#aaa')
+theme.value = document.documentElement.dataset.theme
 
 function onChange(name) {
   if (name === 'my') {

@@ -42,3 +42,10 @@
     color: $text-icon-dark;
   }
 }
+
+@mixin edit_bg(){
+  background: $background-edit-light;
+  [data-theme=dark] & {
+    background: $background-edit-dark;
+  }
+}
