@@ -1,5 +1,10 @@
 <template>
-  <div class="profile-page">
+  <div
+    class="profile-page"
+    @touchstart="touchStart($event)"
+    @touchmove="touchMove($event)"
+    @touchend="touchEnd($event)"
+  >
     <div class="profile-header">
       <div class="profile-avatar">
         <van-image round fit="cover" src="" class="avatar" />
@@ -75,7 +80,7 @@
 
     <!-- 功能按钮 -->
     <div class="functional-buttons">
-      <van-tabs v-model="active" sticky animated :color="vanColor" @change="changeVanTab">
+      <van-tabs v-model="active" sticky animated :color="vanColor" swipeable @change="changeVanTab">
         <van-tab v-for="item in tabs" :key="item.value" :title="item.label" :name="item.value">
           <template #title> {{ item.label }}
             <van-icon v-if="active === item.value" :name="item.icon" size="12" color="#999" />
@@ -117,7 +122,7 @@
 import { ref, watch } from 'vue'
 import { useCounterStore_1 } from '@/stores/counter'
 import { storeToRefs } from 'pinia'
-import Loading from '@/components/Loading'
+import Loading from '@/components/Loading/index.vue'
 
 const counter = useCounterStore_1()
 const { theme } = storeToRefs(counter)
@@ -128,6 +133,11 @@ const followings = ref(6)
 const posts = ref(27)
 const active = ref('works')
 const vanColor = ref('#333')
+const fixedLocationY = ref(0)
+const startLocationY = ref(0)
+const startTime = ref(0)
+const isScroll = ref(false)
+
 const tabs = ref([
   { label: '作品', value: 'works', icon: 'arrow-down' },
   { label: '私密', value: 'privacy', icon: 'lock' },
@@ -143,6 +153,41 @@ watch(theme, val => {
 
 const changeVanTab = (val) => {
   active.value = val
+}
+
+const touchStart = (e) => {
+  isScroll.value = true
+  fixedLocationY.value = startLocationY.value = e.touches[0].pageY
+  startTime.value = Date.now()
+}
+const touchMove = (e) => {
+  if (!isScroll.value) return
+
+  let pageY = (e.touches[0].pageY - startLocationY.value)
+  // const moveDistance = e.touches[0].pageY - fixedLocationY.value
+  const view = document.querySelector('.profile-header')
+  const pageView = document.querySelector('.profile-page')
+  const rect = view.getBoundingClientRect()
+  pageY = (e.touches[0].pageY - startLocationY.value) > 0 ? pageY : 0
+
+  if (rect.top > 48) {
+    if (pageY !== 0) {
+      pageView.style.height = '90vh'
+      pageView.style.overflow = 'hidden'
+    } else {
+      pageView.style.height = 'auto'
+      pageView.style.overflow = 'auto'
+    }
+    view.style.height = 260 + (pageY) + 'px'
+    view.style.transition = 'all 0s'
+  }
+  fixedLocationY.value = e.touches[0].pageY
+}
+const touchEnd = (e) => {
+  isScroll.value = false
+  const view = document.querySelector('.profile-header')
+  view.style.height = 260 + 'px'
+  view.style.transition = 'all 0.5s'
 }
 
 </script>

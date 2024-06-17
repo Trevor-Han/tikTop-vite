@@ -5,9 +5,8 @@
   @include bg_color();
   font-size: 14px;
 }
-
 .profile-header {
-  @include bg_theme();
+  background: url("@/assets/music.jpg") no-repeat center / cover;
   padding: 16px;
   box-sizing: border-box;
   position: relative;
