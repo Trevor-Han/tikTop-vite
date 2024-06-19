@@ -1,5 +1,5 @@
-@import "../../../assets/css/variable";
-@import "../../../assets/css/mixin";
+@import "@/assets/css/variable";
+@import "@/assets/css/mixin";
 .profile-page {
   width: 100%;
   @include bg_color();
@@ -157,3 +157,5 @@
     height: 200px;
   }
 }
+
+

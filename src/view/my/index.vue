@@ -116,27 +116,36 @@
       </van-tabs>
     </div>
   </div>
+  <MeMenu />
+  <Mask @click="removeStyle" />
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { useCounterStore_1 } from '@/stores/counter'
 import { storeToRefs } from 'pinia'
 import Loading from '@/components/Loading/index.vue'
+import MeMenu from '@/view/my/component/MeMenu.vue'
+import Mask from '@/view/my/component/Mask.vue'
 
 const counter = useCounterStore_1()
 const { theme } = storeToRefs(counter)
 
-const nickname = ref('TTCV')
+const nickname = ref('CCTV')
 const followers = ref(149)
 const followings = ref(6)
 const posts = ref(27)
 const active = ref('works')
 const vanColor = ref('#333')
 const fixedLocationY = ref(0)
+const fixedLocationX = ref(0)
 const startLocationY = ref(0)
+const startLocationX = ref(0)
 const startTime = ref(0)
 const isScroll = ref(false)
+const dataMap = reactive({
+  maxPath: window.innerWidth * 2 / 3 + 40
+})
 
 const tabs = ref([
   { label: '作品', value: 'works', icon: 'arrow-down' },
@@ -158,21 +167,28 @@ const changeVanTab = (val) => {
 const touchStart = (e) => {
   isScroll.value = true
   fixedLocationY.value = startLocationY.value = e.touches[0].pageY
+  startLocationX.value = e.touches[0].pageX
   startTime.value = Date.now()
 }
 const touchMove = (e) => {
+  e.preventDefault()
   if (!isScroll.value) return
 
-  let pageY = (e.touches[0].pageY - startLocationY.value)
+  let pageY = e.touches[0].pageY - startLocationY.value
   // const moveDistance = e.touches[0].pageY - fixedLocationY.value
   const view = document.querySelector('.profile-header')
   const pageView = document.querySelector('.profile-page')
+  const tabsView = document.querySelector('.tabs_view')
+  const menuView = document.querySelector('.menu-view')
+  const mask = document.querySelector('.mask')
+
+  const pageX = e.touches[0].pageX - startLocationX.value
   const rect = view.getBoundingClientRect()
   pageY = (e.touches[0].pageY - startLocationY.value) > 0 ? pageY : 0
 
   if (rect.top > 48) {
     if (pageY !== 0) {
-      pageView.style.height = '90vh'
+      pageView.style.height = '100vh'
       pageView.style.overflow = 'hidden'
     } else {
       pageView.style.height = 'auto'
@@ -181,17 +197,77 @@ const touchMove = (e) => {
     view.style.height = 260 + (pageY) + 'px'
     view.style.transition = 'all 0s'
   }
+
+  if (pageX < 0) {
+    const path = Math.abs(pageX) < dataMap.maxPath ? pageX * 2 / 3 : -(dataMap.maxPath * 2 / 3)
+    pageView.style.transform = `translate(${path}px, 0px)`
+    tabsView.style.transform = `translate(${path}px, 0px)`
+    menuView.style.transform = `translate(${path}px, 0px)`
+
+    pageView.style.transition = 'all 0s'
+    tabsView.style.transition = 'all 0s'
+    menuView.style.transition = 'all 0s'
+    fixedLocationX.value = path
+
+    mask.classList.add('show')
+  }
+
   fixedLocationY.value = e.touches[0].pageY
+
+  // console.log(moveX)
 }
 const touchEnd = (e) => {
   isScroll.value = false
+  headerViewRecover()
+  pageViewRecover()
+}
+
+const headerViewRecover = () => {
   const view = document.querySelector('.profile-header')
   view.style.height = 260 + 'px'
   view.style.transition = 'all 0.5s'
+}
+
+const pageViewRecover = () => {
+  const pageView = document.querySelector('.profile-page')
+  const tabsView = document.querySelector('.tabs_view')
+  const menuView = document.querySelector('.menu-view')
+  const mask = document.querySelector('.mask')
+
+  if (fixedLocationX.value < -80) {
+    pageView.style.transform = `translate(${-(dataMap.maxPath * 2 / 3 + 40)}px, 0px)`
+    tabsView.style.transform = `translate(${-(dataMap.maxPath * 2 / 3 + 40)}px, 0px)`
+    menuView.style.transform = `translate(${-(dataMap.maxPath * 2 / 3 + 40)}px, 0px)`
+  } else {
+    pageView.style.transform = `translate(0px, 0px)`
+    tabsView.style.transform = `translate(0px, 0px)`
+    menuView.style.transform = `translate(0px, 0px)`
+    mask.classList.remove('show')
+  }
+
+  pageView.style.transition = 'all 0.5s'
+  tabsView.style.transition = 'all 0.5s'
+  menuView.style.transition = 'all 0.5s'
+}
+
+const removeStyle = () => {
+  const pageView = document.querySelector('.profile-page')
+  const tabsView = document.querySelector('.tabs_view')
+  const menuView = document.querySelector('.menu-view')
+  const mask = document.querySelector('.mask')
+
+  pageView.style.transform = `translate(0px, 0px)`
+  tabsView.style.transform = `translate(0px, 0px)`
+  menuView.style.transform = `translate(0px, 0px)`
+  mask.classList.remove('show')
 }
 
 </script>
 
 <style scoped lang="scss">
 @import "./style/style";
+
+.show{
+  display: block;
+}
 </style>

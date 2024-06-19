@@ -12,7 +12,7 @@
       </transition>
     </router-view>
 
-    <van-tabbar v-model="active" route @change="onChange">
+    <van-tabbar v-model="active" route class="tabs_view" @change="onChange">
       <van-tabbar-item name="home" replace to="/home">首页</van-tabbar-item>
       <van-tabbar-item name="friend" to="/friend">朋友</van-tabbar-item>
       <van-tabbar-item name="add">
@@ -26,6 +26,7 @@
       <van-tabbar-item name="news" to="/news">消息</van-tabbar-item>
       <van-tabbar-item name="my" to="/my">我的</van-tabbar-item>
     </van-tabbar>
+
   </van-config-provider>
 </template>
 
